@@ -428,6 +428,7 @@ defmodule Ecto.RepoTest do
     id = model.embed.id
     assert id
     assert model.embed == %{embed | id: id}
+    assert model.embed.__meta__.state == :loaded
 
     changeset = Ecto.Changeset.change(%MyModel{}, embeds: [embed])
     model = TestRepo.insert!(changeset)
@@ -437,6 +438,7 @@ defmodule Ecto.RepoTest do
     [%{id: id}] = model.embeds
     assert id
     assert model.embeds == [%{embed | id: id}]
+    assert model.embeds[0].__meta__.state == :loaded
   end
 
   test "handles embeds on insert when error" do
